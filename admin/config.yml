@@ -1,14 +1,14 @@
 backend:
   name: github
-  repo: abdulrhman-aas/my-store 
+  repo: abdulrhman-aas/my-store
 
-media_folder: "images/uploads"  
-public_folder: "/images/uploads"  
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
 
 collections:
   - name: "products"
     label: "Products"
-    folder: "products"          
+    folder: "products"
     create: true
     slug: "{{slug}}"
     fields:
