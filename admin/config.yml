@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: abdulrhman-aas/my-store
+  repo: abdulrhman-aas/my-store  # استبدل باسم المستخدم والمستودع الخاص بك
 
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
@@ -8,7 +8,7 @@ public_folder: "/images/uploads"
 collections:
   - name: "products"
     label: "Products"
-    folder: "products"
+    folder: "products"       # كل ملف Markdown يمثل منتج
     create: true
     slug: "{{slug}}"
     fields:
