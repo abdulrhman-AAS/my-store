@@ -21,181 +21,158 @@
     .logo{width:56px;height:56px;background:white;color:var(--accent);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:900}
     h1{margin:0;font-size:22px}
     p.lead{margin:6px 0 0;opacity:.95;font-size:16px}
-
     .hero{margin-top:22px;text-align:center}
     .hero h2{font-size:28px;margin-bottom:8px}
     .hero p{font-size:16px;color:black}
-
     .products{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
     @media (max-width:920px){.products{grid-template-columns:repeat(2,1fr)}}
     @media (max-width:600px){.products{grid-template-columns:1fr}}
-
     .product{display:flex;flex-direction:column;gap:10px;background:var(--card);padding:12px;border-radius:var(--radius);box-shadow:0 6px 20px rgba(12,16,30,0.06);}
     .product .thumb{height:160px;border-radius:12px;background:#e6eefc;display:flex;align-items:center;justify-content:center;font-weight:700;color:#0b84ff;overflow:hidden}
     .product .thumb img{width:100%;height:100%;object-fit:contain}
     .price{font-weight:800;font-size:18px}
     .meta{color:var(--muted);font-size:13px}
-
     .calc-card{background:var(--card);padding:18px;border-radius:var(--radius);box-shadow:0 6px 20px rgba(12,16,30,0.06);margin-top:30px}
     .calc-row{display:flex;gap:10px;align-items:center;margin-top:10px}
     .input{width:100%;padding:10px;border-radius:10px;border:1px solid #e6eef8}
-
     .social{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap}
     .social a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:var(--accent);color:white;text-decoration:none;font-weight:700}
-
     footer{margin-top:28px;padding:18px;text-align:center;color:var(--muted)}
   </style>
 </head>
 <body>
-  <header>
-    <div class="container">
-      <div class="brand">
-        <div class="logo">A</div>
-        <div>
-          <h1>ASANHANI TK</h1>
-          <p class="lead">أفضل العروض، تقسيط مريح ودفعات مرنة.</p>
+<header>
+  <div class="container">
+    <div class="brand">
+      <div class="logo">A</div>
+      <div>
+        <h1>ASANHANI TK</h1>
+        <p class="lead">أفضل العروض، تقسيط مريح ودفعات مرنة.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <h2>مرحباً بك في متجر ASANHANI TK</h2>
+    <p>اختر هاتفك المفضل نقداً أو بالتقسيط حسب راحتك.</p>
+  </section>
+
+  <section class="products" id="products">
+    <!-- المنتجات ستظهر هنا ديناميك -->
+  </section>
+
+  <div class="calc-card" id="calcCard">
+    <h3>حاسبة الأقساط وتحويل العملات</h3>
+    <label class='meta'>الهاتف المحدد:</label>
+    <div id='selectedProduct' style='font-weight:700;margin-bottom:8px'>لم يتم الاختيار</div>
+
+    <label class='meta'>سعر الهاتف بالدولار</label>
+    <input id='price' class='input' type='number' value='0'>
+
+    <label class='meta'>المقدم بالدولار</label>
+    <input id='down' class='input' type='number' value='0'>
+
+    <label class='meta'>عدد الشهور</label>
+    <input id='months' class='input' type='number' value='1' min='1' max='12'>
+
+    <label class='meta'>اختر العملة للعرض</label>
+    <select id='currency' class='input'>
+      <option value='USD'>دولار</option>
+      <option value='SAR'>ريال سعودي</option>
+      <option value='YER'>ريال يمني</option>
+    </select>
+
+    <div class='calc-row'>
+      <button class='btn btn-primary' onclick='calculate()'>احسب القسط</button>
+      <button class='btn btn-outline' onclick='resetCalc()'>إعادة</button>
+    </div>
+
+    <div id='result' style='margin-top:12px;font-weight:800'></div>
+
+    <div class='social'>
+      <a href='https://wa.me/967773333413' target='_blank'>W</a>
+      <a href='https://wa.me/967776896504' target='_blank'>W</a>
+      <a href='#' target='_blank'>I</a>
+      <a href='#' target='_blank'>T</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>حقوق الملكية © <span id='year'></span> ASANHANI TK — جميع الحقوق محفوظة.</p>
+  </footer>
+</main>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // المنتجات الآن مؤقتاً باستخدام مصفوفة محلية
+  const phones = [
+    {model: 'S10', price: 12000, image: '/images/uploads/S22U1.jpg'},
+    {model: 'S10e', price: 10000, image: '/images/uploads/placeholder.jpg'},
+    {model: 'S20', price: 18000, image: '/images/uploads/placeholder.jpg'},
+    {model: 'S20 FE', price: 16000, image: '/images/uploads/placeholder.jpg'},
+    {model: 'S21', price: 19000, image: '/images/uploads/placeholder.jpg'}
+  ];
+
+  const container = document.getElementById('products');
+  phones.forEach((p, idx)=>{
+    const card = document.createElement('div');
+    card.className='product';
+    card.innerHTML=`
+      <div class="thumb"><img src="${p.image}" alt="${p.model}"></div>
+      <div>
+        <div style="font-weight:700">${p.model}</div>
+        <div class="price">${p.price}$</div>
+        <div class="actions">
+          <button class="btn btn-primary" onclick="selectProduct('${p.model}', ${p.price})">كاش</button>
+          <button class="btn btn-outline" onclick="selectProduct('${p.model}', ${p.price})">تقسيط</button>
         </div>
       </div>
-    </div>
-  </header>
+    `;
+    container.appendChild(card);
+  });
 
-  <main class="container">
-    <section class="hero">
-      <h2>مرحباً بك في متجر ASANHANI TK</h2>
-      <p>اختر هاتفك المفضل نقداً أو بالتقسيط حسب راحتك.</p>
-    </section>
+  // الحاسبة
+  const increaseMap = {1:7,2:12,3:16,4:20,5:23,6:25,7:28,8:31,9:34,10:36,11:39,12:41};
+  const rates = {USD:1, SAR:3.8, YER:540};
 
-    <section class="products" id="products">
-      <!-- المنتجات ستظهر هنا ديناميك -->
-    </section>
+  function selectProduct(name, price){
+    document.getElementById('selectedProduct').textContent = name + ' — ' + price + '$';
+    document.getElementById('price').value = price;
+  }
 
-    <div class="calc-card" id="calcCard">
-      <h3>حاسبة الأقساط وتحويل العملات</h3>
-      <label class='meta'>الهاتف المحدد:</label>
-      <div id='selectedProduct' style='font-weight:700;margin-bottom:8px'>لم يتم الاختيار</div>
+  function calculate(){
+    let P = parseFloat(document.getElementById('price').value) || 0;
+    let D = parseFloat(document.getElementById('down').value) || 0;
+    let months = parseInt(document.getElementById('months').value,10) || 1;
+    if(months<1) months=1;
+    if(months>12) months=12;
+    let remaining = P - D;
+    if(remaining<0) remaining=0;
+    let perc = increaseMap[months] || 0;
+    let increaseUSD = remaining*perc/100;
+    let totalUSD = remaining + increaseUSD;
+    let monthlyUSD = totalUSD/months;
 
-      <label class='meta'>سعر الهاتف بالدولار</label>
-      <input id='price' class='input' type='number' value='0'>
+    let currency = document.getElementById('currency').value;
+    let rate = rates[currency];
+    let displayTotal = (totalUSD*rate).toFixed(2);
+    let displayMonthly = (monthlyUSD*rate).toFixed(2);
+    let displayIncrease = (increaseUSD*rate).toFixed(2);
 
-      <label class='meta'>المقدم بالدولار</label>
-      <input id='down' class='input' type='number' value='0'>
+    document.getElementById('result').innerHTML = `القسط الشهري: ${displayMonthly} ${currency}<br>إجمالي بعد ${months} شهر: ${displayTotal} ${currency}<br>الزيادة على المبلغ المتبقي: ${displayIncrease} ${currency}`;
+  }
 
-      <label class='meta'>عدد الشهور</label>
-      <input id='months' class='input' type='number' value='1' min='1' max='12'>
-
-      <label class='meta'>اختر العملة للعرض</label>
-      <select id='currency' class='input'>
-        <option value='USD'>دولار</option>
-        <option value='SAR'>ريال سعودي</option>
-        <option value='YER'>ريال يمني</option>
-      </select>
-
-      <div class='calc-row'>
-        <button class='btn btn-primary' onclick='calculate()'>احسب القسط</button>
-        <button class='btn btn-outline' onclick='resetCalc()'>إعادة</button>
-      </div>
-
-      <div id='result' style='margin-top:12px;font-weight:800'></div>
-
-      <div class='social'>
-        <a href='https://wa.me/967773333413' target='_blank'>W</a>
-        <a href='https://wa.me/967776896504' target='_blank'>W</a>
-        <a href='#' target='_blank'>I</a>
-        <a href='#' target='_blank'>T</a>
-      </div>
-    </div>
-
-    <footer>
-      <p>حقوق الملكية © <span id='year'></span> ASANHANI TK — جميع الحقوق محفوظة.</p>
-    </footer>
-  </main>
-
-  <!-- السكريبت الديناميك للمنتجات من Markdown -->
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/js-yaml/dist/js-yaml.min.js"></script>
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    const owner = 'abdulrhman-aas';
-    const repo = 'my-store';
-    const path = 'products';
-    const branch = 'main';
-
-    async function loadProducts() {
-      const container = document.getElementById('products');
-      try {
-        const filesRes = await axios.get(`https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${branch}`);
-        const files = filesRes.data.filter(f => f.name.endsWith('.md'));
-
-        for(const file of files){
-          const mdRes = await axios.get(file.download_url);
-          const yamlText = mdRes.data.match(/^---\n([\s\S]*?)\n---/);
-          if(!yamlText) continue;
-
-          const data = jsyaml.load(yamlText[1]);
-          const title = data.title || '';
-          const description = data.description || '';
-          const price = data.price || '';
-          const image = data.image || '';
-
-          const card = document.createElement('div');
-          card.className = 'product';
-          card.innerHTML = `
-            <div class="thumb"><img src="${image}" alt="${title}"></div>
-            <div>
-              <div style="font-weight:700">${title}</div>
-              <div class="price">${price}$</div>
-              <div class="meta">${description}</div>
-            </div>
-          `;
-          container.appendChild(card);
-        }
-      } catch(err){
-        console.error('Error loading products:', err);
-      }
-    }
-
-    loadProducts();
-
-    // الحاسبة (مثل الكود القديم)
-    const increaseMap = {1:7,2:12,3:16,4:20,5:23,6:25,7:28,8:31,9:34,10:36,11:39,12:41};
-    const rates = {USD:1, SAR:3.8, YER:540};
-
-    function selectProduct(name,price){
-      document.getElementById('selectedProduct').textContent = name + ' — ' + price + '$';
-      document.getElementById('price').value = price;
-    }
-
-    function calculate(){
-      let P = parseFloat(document.getElementById('price').value) || 0;
-      let D = parseFloat(document.getElementById('down').value) || 0;
-      let months = parseInt(document.getElementById('months').value,10) || 1;
-      if(months<1) months=1;
-      if(months>12) months=12;
-      let remaining = P - D;
-      if(remaining < 0) remaining = 0;
-      let perc = increaseMap[months] || 0;
-      let increaseUSD = remaining * perc/100;
-      let totalUSD = remaining + increaseUSD;
-      let monthlyUSD = totalUSD / months;
-
-      let currency = document.getElementById('currency').value;
-      let rate = rates[currency];
-      let displayTotal = (totalUSD * rate).toFixed(2);
-      let displayMonthly = (monthlyUSD * rate).toFixed(2);
-      let displayIncrease = (increaseUSD * rate).toFixed(2);
-
-      document.getElementById('result').innerHTML = `القسط الشهري: ${displayMonthly} ${currency}<br>إجمالي بعد ${months} شهر: ${displayTotal} ${currency}<br>الزيادة على المبلغ المتبقي: ${displayIncrease} ${currency}`;
-    }
-
-    function resetCalc(){
-      document.getElementById('price').value = 0;
-      document.getElementById('down').value = 0;
-      document.getElementById('months').value = 1;
-      document.getElementById('currency').value = 'USD';
-      document.getElementById('selectedProduct').textContent = 'لم يتم الاختيار';
-      document.getElementById('result').textContent = '';
-    }
-  </script>
+  function resetCalc(){
+    document.getElementById('price').value=0;
+    document.getElementById('down').value=0;
+    document.getElementById('months').value=1;
+    document.getElementById('currency').value='USD';
+    document.getElementById('selectedProduct').textContent='لم يتم الاختيار';
+    document.getElementById('result').textContent='';
+  }
+</script>
 </body>
 </html>
