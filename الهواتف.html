@@ -24,9 +24,8 @@
 
     .hero{margin-top:22px;text-align:center}
     .hero h2{font-size:28px;margin-bottom:8px}
-    .hero p{font-size:16px;color:white}
+    .hero p{font-size:16px;color:black}
 
-    /* grid: 3 per row on desktop, responsive */
     .products{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
     @media (max-width:920px){.products{grid-template-columns:repeat(2,1fr)}}
     @media (max-width:600px){.products{grid-template-columns:1fr}}
@@ -36,10 +35,6 @@
     .product .thumb img{width:100%;height:100%;object-fit:contain}
     .price{font-weight:800;font-size:18px}
     .meta{color:var(--muted);font-size:13px}
-    .actions{display:flex;gap:8px;flex-wrap:wrap}
-    .btn{padding:10px 14px;border-radius:10px;border:0;cursor:pointer}
-    .btn-primary{background:var(--accent);color:white}
-    .btn-outline{background:transparent;border:1px solid #e2e8f0}
 
     .calc-card{background:var(--card);padding:18px;border-radius:var(--radius);box-shadow:0 6px 20px rgba(12,16,30,0.06);margin-top:30px}
     .calc-row{display:flex;gap:10px;align-items:center;margin-top:10px}
@@ -67,11 +62,11 @@
   <main class="container">
     <section class="hero">
       <h2>مرحباً بك في متجر ASANHANI TK</h2>
-      <p style="color: black;">اختر هاتفك المفضل نقداً أو بالتقسيط حسب راحتك.</p>
+      <p>اختر هاتفك المفضل نقداً أو بالتقسيط حسب راحتك.</p>
     </section>
 
     <section class="products" id="products">
-      <!-- كروت الهواتف ستُنشأ ديناميكياً من مصفوفة الـ phones -->
+      <!-- المنتجات ستظهر هنا ديناميك -->
     </section>
 
     <div class="calc-card" id="calcCard">
@@ -115,78 +110,56 @@
     </footer>
   </main>
 
+  <!-- السكريبت الديناميك للمنتجات من Markdown -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml/dist/js-yaml.min.js"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // قائمة 15 هاتف مع أسعار لكل سعة (تقريبية)
-    const phones = [
-      {model: 'S10', prices:{'128':12000,'256':140,'512':170}, img:'S22U1.jpg'},
-      {model: 'S10e', prices:{'128':100,'256':120,'512':150}, img:'placeholder.jpg'},
-      {model: 'S20', prices:{'128':180,'256':200,'512':230}, img:'placeholder.jpg'},
-      {model: 'S20 FE', prices:{'128':160,'256':180,'512':210}, img:'placeholder.jpg'},
-      {model: 'S21', prices:{'128':190,'256':210,'512':240}, img:'placeholder.jpg'},
-      {model: 'S21+', prices:{'128':220,'256':240,'512':270}, img:'placeholder.jpg'},
-      {model: 'S21 Ultra', prices:{'128':300,'256':330,'512':380}, img:'placeholder.jpg'},
-      {model: 'S22', prices:{'128':230,'256':250,'512':280}, img:'placeholder.jpg'},
-      {model: 'S22+', prices:{'128':260,'256':290,'512':320}, img:'placeholder.jpg'},
-      {model: 'S22 Ultra', prices:{'128':380,'256':420,'512':480}, img:'placeholder.jpg'},
-      {model: 'S23', prices:{'128':260,'256':290,'512':330}, img:'placeholder.jpg'},
-      {model: 'S23+', prices:{'128':300,'256':340,'512':380}, img:'placeholder.jpg'},
-      {model: 'S23 Ultra', prices:{'128':520,'256':580,'512':650}, img:'placeholder.jpg'},
-      {model: 'Note 20', prices:{'128':320,'256':350,'512':390}, img:'placeholder.jpg'},
-      {model: 'Note 20 Ultra', prices:{'128':420,'256':480,'512':540}, img:'placeholder.jpg'}
-    ];
+    const owner = 'abdulrhman-aas';
+    const repo = 'my-store';
+    const path = 'products';
+    const branch = 'main';
 
-    const productsContainer = document.getElementById('products');
+    async function loadProducts() {
+      const container = document.getElementById('products');
+      try {
+        const filesRes = await axios.get(`https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${branch}`);
+        const files = filesRes.data.filter(f => f.name.endsWith('.md'));
 
-    phones.forEach((p, idx) => {
-      const card = document.createElement('div');
-      card.className = 'product card';
-      // default price = 128
-      const defaultPrice = p.prices['128'];
-      card.innerHTML = `
-        <div class="thumb"><img src="${p.img}" alt="${p.model}"></div>
-        <div>
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div style="font-weight:700">${p.model}</div>
-            <div class="price" id="price-display-${idx}">${defaultPrice}$</div>
-          </div>
-          <div class="meta">سعة</div>
-          <select class="input" id="capacity-${idx}" onchange="onCapacityChange(${idx})">
-            <option value="128">128 GB</option>
-            <option value="256">256 GB</option>
-            <option value="512">512 GB</option>
-          </select>
+        for(const file of files){
+          const mdRes = await axios.get(file.download_url);
+          const yamlText = mdRes.data.match(/^---\n([\s\S]*?)\n---/);
+          if(!yamlText) continue;
 
-          <div class="actions">
-            <button class="btn btn-primary" onclick="selectProductFromCard(${idx})">كاش</button>
-            <button class="btn btn-outline" onclick="selectProductFromCard(${idx})">تقسيط</button>
-          </div>
-        </div>
-      `;
-      productsContainer.appendChild(card);
-    });
+          const data = jsyaml.load(yamlText[1]);
+          const title = data.title || '';
+          const description = data.description || '';
+          const price = data.price || '';
+          const image = data.image || '';
 
-    // helper to change displayed price when capacity changes
-    function onCapacityChange(idx){
-      const cap = document.getElementById(`capacity-${idx}`).value;
-      const price = phones[idx].prices[cap];
-      document.getElementById(`price-display-${idx}`).textContent = price + '$';
+          const card = document.createElement('div');
+          card.className = 'product';
+          card.innerHTML = `
+            <div class="thumb"><img src="${image}" alt="${title}"></div>
+            <div>
+              <div style="font-weight:700">${title}</div>
+              <div class="price">${price}$</div>
+              <div class="meta">${description}</div>
+            </div>
+          `;
+          container.appendChild(card);
+        }
+      } catch(err){
+        console.error('Error loading products:', err);
+      }
     }
 
-    // when user clicks cash/installments, set calculator fields
-    function selectProductFromCard(idx){
-      const selectedCap = document.getElementById(`capacity-${idx}`).value;
-      const price = phones[idx].prices[selectedCap];
-      const name = phones[idx].model + ' ' + selectedCap + 'GB';
-      selectProduct(name, price);
-      // scroll to calculator
-      document.getElementById('calcCard').scrollIntoView({behavior:'smooth'});
-    }
+    loadProducts();
 
-    // existing calculator logic
+    // الحاسبة (مثل الكود القديم)
     const increaseMap = {1:7,2:12,3:16,4:20,5:23,6:25,7:28,8:31,9:34,10:36,11:39,12:41};
-    const rates = {USD:1, SAR:3.8, YER:540}; // دولار للدخل
+    const rates = {USD:1, SAR:3.8, YER:540};
 
     function selectProduct(name,price){
       document.getElementById('selectedProduct').textContent = name + ' — ' + price + '$';
@@ -226,6 +199,3 @@
   </script>
 </body>
 </html>
-
-
-
