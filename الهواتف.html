@@ -14,13 +14,10 @@
       --radius:14px;
     }
     *{box-sizing:border-box}
-    body{font-family:'Tajawal',system-ui,Arial; margin:0; background:var(--bg); color:#0f172a; scroll-behavior:smooth;}
-    header{background:linear-gradient(90deg,var(--accent),#0066cc); color:white; padding:28px 20px; border-bottom-left-radius:24px;border-bottom-right-radius:24px}
+    body{font-family:'Tajawal',system-ui,Arial; margin:0; background:var(--bg); color:#0f172a;}
+    header{background:linear-gradient(90deg,var(--accent),#0066cc); color:white; padding:28px 20px; border-bottom-left-radius:24px;border-bottom-right-radius:24px; text-align:center;}
+    header h1{margin:0;font-size:24px;}
     .container{max-width:1200px;margin:0 auto;padding:20px}
-    .brand{display:flex;gap:16px;align-items:center}
-    .logo{width:56px;height:56px;background:white;color:var(--accent);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:900}
-    h1{margin:0;font-size:22px}
-    p.lead{margin:6px 0 0;opacity:.95;font-size:16px}
     .products{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
     @media (max-width:920px){.products{grid-template-columns:repeat(2,1fr)}}
     @media (max-width:600px){.products{grid-template-columns:1fr}}
@@ -28,26 +25,21 @@
     .product .thumb{height:160px;border-radius:12px;background:#e6eefc;display:flex;align-items:center;justify-content:center;font-weight:700;color:#0b84ff;overflow:hidden}
     .product .thumb img{width:100%;height:100%;object-fit:contain}
     .price{font-weight:800;font-size:18px}
-    .meta{color:var(--muted);font-size:13px}
+    .meta{color:var(--muted);font-size:13px;margin:4px 0;}
     .calc-card{background:var(--card);padding:18px;border-radius:var(--radius);box-shadow:0 6px 20px rgba(12,16,30,0.06);margin-top:30px}
     .calc-row{display:flex;gap:10px;align-items:center;margin-top:10px}
     .input{width:100%;padding:10px;border-radius:10px;border:1px solid #e6eef8}
-    .social{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap}
-    .social a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:var(--accent);color:white;text-decoration:none;font-weight:700}
+    .btn{padding:10px 14px;border-radius:10px;border:0;cursor:pointer}
+    .btn-primary{background:var(--accent);color:white}
+    .btn-outline{background:transparent;border:1px solid #e2e8f0}
     footer{margin-top:28px;padding:18px;text-align:center;color:var(--muted)}
   </style>
 </head>
 <body>
+
 <header>
-  <div class="container">
-    <div class="brand">
-      <div class="logo">A</div>
-      <div>
-        <h1>ASANHANI TK - الهواتف</h1>
-        <p class="lead">أفضل العروض، تقسيط مريح ودفعات مرنة.</p>
-      </div>
-    </div>
-  </div>
+  <h1>ASANHANI TK - الهواتف</h1>
+  <p>أفضل العروض، تقسيط مريح ودفعات مرنة.</p>
 </header>
 
 <main class="container">
@@ -85,105 +77,108 @@
   </div>
 
   <footer>
-    <p>حقوق الملكية © <span id='year'></span> ASANHANI TK — جميع الحقوق محفوظة.</p>
+    <p>حقوق الملكية © <span id="year"></span> ASANHANI TK — جميع الحقوق محفوظة.</p>
   </footer>
 </main>
 
-<!-- مكتبات axios و marked -->
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+<!-- مكتبات لتحميل Markdown -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
 <script>
-  document.getElementById('year').textContent = new Date().getFullYear();
+// قراءة ملفات Markdown وعرضها ديناميكيًا
+async function loadProducts() {
+  const container = document.getElementById('products');
+  const files = [
+    'products/S10.md',
+    'products/S10e.md',
+    'products/S20.md'
+    // أضف باقي ملفات Markdown هنا
+  ];
 
-  async function loadProducts() {
-    const container = document.getElementById('products');
+  for (const file of files) {
+    try {
+      const res = await axios.get(file);
+      const content = res.data;
 
-    const files = [
-      'products/S10.md',
-      'products/S10e.md',
-      'products/S20.md'
-      // أضف باقي ملفات Markdown هنا
-    ];
+      const yamlMatch = content.match(/---\n([\s\S]*?)\n---/);
+      if (!yamlMatch) continue;
+      const yamlContent = yamlMatch[1];
+      const lines = yamlContent.split('\n');
+      const product = {};
+      lines.forEach(line => {
+        const [key,value] = line.split(':').map(s => s.trim());
+        if(key && value) product[key] = value.replace(/"/g,'');
+      });
 
-    for (const file of files) {
-      try {
-        const res = await axios.get(file);
-        const content = res.data;
-
-        // تحويل YAML frontmatter إلى JSON
-        const yamlMatch = content.match(/---\n([\s\S]*?)\n---/);
-        if (!yamlMatch) continue;
-        const yamlContent = yamlMatch[1];
-        const lines = yamlContent.split('\n');
-        const product = {};
-        lines.forEach(line => {
-          const [key,value] = line.split(':').map(s => s.trim());
-          if(key && value) product[key] = value.replace(/"/g,'');
-        });
-
-        const card = document.createElement('div');
-        card.className='product';
-        card.innerHTML=`
-          <div class="thumb"><img src="${product.image}" alt="${product.title}"></div>
-          <div>
-            <div style="font-weight:700">${product.title}</div>
-            <div class="price">${product.price}$</div>
-            <div class="actions">
-              <button class="btn btn-primary" onclick="selectProduct('${product.title}', ${product.price})">كاش</button>
-              <button class="btn btn-outline" onclick="selectProduct('${product.title}', ${product.price})">تقسيط</button>
-            </div>
+      const card = document.createElement('div');
+      card.className = 'product';
+      card.innerHTML = `
+        <div class="thumb"><img src="${product.image}" alt="${product.title}"></div>
+        <div>
+          <div style="font-weight:700">${product.title}</div>
+          <div class="meta">${product.description}</div>
+          <div class="price">${product.price}$</div>
+          <div class="actions">
+            <button class="btn btn-primary" onclick="selectProduct('${product.title}', ${product.price})">كاش</button>
+            <button class="btn btn-outline" onclick="selectProduct('${product.title}', ${product.price})">تقسيط</button>
           </div>
-        `;
-        container.appendChild(card);
+        </div>
+      `;
+      container.appendChild(card);
 
-      } catch(err) {
-        console.error('خطأ في تحميل المنتج', file, err);
-      }
+    } catch(err) {
+      console.error('خطأ في تحميل المنتج', file, err);
     }
   }
+}
 
-  loadProducts();
+loadProducts();
 
-  // حاسبة الأقساط
-  const increaseMap = {1:7,2:12,3:16,4:20,5:23,6:25,7:28,8:31,9:34,10:36,11:39,12:41};
-  const rates = {USD:1, SAR:3.8, YER:540};
+// الحاسبة
+const increaseMap = {1:7,2:12,3:16,4:20,5:23,6:25,7:28,8:31,9:34,10:36,11:39,12:41};
+const rates = {USD:1, SAR:3.8, YER:540};
 
-  function selectProduct(name, price){
-    document.getElementById('selectedProduct').textContent = name + ' — ' + price + '$';
-    document.getElementById('price').value = price;
-  }
+function selectProduct(name, price){
+  document.getElementById('selectedProduct').textContent = name + ' — ' + price + '$';
+  document.getElementById('price').value = price;
+}
 
-  function calculate(){
-    let P = parseFloat(document.getElementById('price').value) || 0;
-    let D = parseFloat(document.getElementById('down').value) || 0;
-    let months = parseInt(document.getElementById('months').value,10) || 1;
-    if(months<1) months=1;
-    if(months>12) months=12;
-    let remaining = P - D;
-    if(remaining<0) remaining=0;
-    let perc = increaseMap[months] || 0;
-    let increaseUSD = remaining*perc/100;
-    let totalUSD = remaining + increaseUSD;
-    let monthlyUSD = totalUSD/months;
+function calculate(){
+  let P = parseFloat(document.getElementById('price').value) || 0;
+  let D = parseFloat(document.getElementById('down').value) || 0;
+  let months = parseInt(document.getElementById('months').value,10) || 1;
+  if(months<1) months=1;
+  if(months>12) months=12;
+  let remaining = P - D;
+  if(remaining<0) remaining=0;
+  let perc = increaseMap[months] || 0;
+  let increaseUSD = remaining*perc/100;
+  let totalUSD = remaining + increaseUSD;
+  let monthlyUSD = totalUSD/months;
 
-    let currency = document.getElementById('currency').value;
-    let rate = rates[currency];
-    let displayTotal = (totalUSD*rate).toFixed(2);
-    let displayMonthly = (monthlyUSD*rate).toFixed(2);
-    let displayIncrease = (increaseUSD*rate).toFixed(2);
+  let currency = document.getElementById('currency').value;
+  let rate = rates[currency];
+  let displayTotal = (totalUSD*rate).toFixed(2);
+  let displayMonthly = (monthlyUSD*rate).toFixed(2);
+  let displayIncrease = (increaseUSD*rate).toFixed(2);
 
-    document.getElementById('result').innerHTML = `القسط الشهري: ${displayMonthly} ${currency}<br>إجمالي بعد ${months} شهر: ${displayTotal} ${currency}<br>الزيادة على المبلغ المتبقي: ${displayIncrease} ${currency}`;
-  }
+  document.getElementById('result').innerHTML = `القسط الشهري: ${displayMonthly} ${currency}<br>إجمالي بعد ${months} شهر: ${displayTotal} ${currency}<br>الزيادة على المبلغ المتبقي: ${displayIncrease} ${currency}`;
+}
 
-  function resetCalc(){
-    document.getElementById('price').value=0;
-    document.getElementById('down').value=0;
-    document.getElementById('months').value=1;
-    document.getElementById('currency').value='USD';
-    document.getElementById('selectedProduct').textContent='لم يتم الاختيار';
-    document.getElementById('result').textContent='';
-  }
+function resetCalc(){
+  document.getElementById('price').value=0;
+  document.getElementById('down').value=0;
+  document.getElementById('months').value=1;
+  document.getElementById('currency').value='USD';
+  document.getElementById('selectedProduct').textContent='لم يتم الاختيار';
+  document.getElementById('result').textContent='';
+}
 </script>
+
 </body>
 </html>
