@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ASANHANI TK — هواتف 3D Premium</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+body {
+  font-family:Tajawal,Arial,sans-serif;
+  background: radial-gradient(circle at 20% 30%,#0a1b2b, #041428, #06182a);
+  color:white;
+  overflow-x:hidden;
+}
+.tilt-card {
+  perspective:1500px;
+}
+.tilt-inner {
+  transform-style:preserve-3d;
+  transition:transform .35s cubic-bezier(.2,.9,.32,1);
+  will-change:transform;
+  border-radius:24px;
+  overflow:hidden;
+}
+.neon-btn {
+  box-shadow:0 8px 30px rgba(138,43,226,0.12),0 0 12px rgba(0,229,255,0.06);
+  transition:transform .22s ease,box-shadow .22s ease, background .22s ease;
+}
+.neon-btn:hover {
+  transform:translateY(-6px) scale(1.05);
+  box-shadow:0 20px 60px rgba(138,43,226,0.28),0 0 40px rgba(0,229,255,0.2);
+}
+.header-btn {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(6px);
+  padding:6px 12px;
+  border-radius:12px;
+  font-weight:700;
+  transition:0.25s;
+}
+.header-btn:hover{
+  background: rgba(255,255,255,0.25);
+}
+.price-tag{
+  background:linear-gradient(90deg,#ffdd00,#ff8800);
+  padding:4px 12px;
+  border-radius:12px;
+  font-weight:800;
+  color:#0b0b0b;
+}
+</style>
+</head>
+<body class="antialiased">
+
+<header class="sticky top-0 bg-[#06203A]/90 backdrop-blur-md p-4 z-50 flex justify-between items-center max-w-7xl mx-auto rounded-b-3xl">
+  <div class="flex items-center gap-4">
+    <a href="index.html" class="header-btn flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> رجوع</a>
+    <div class="text-2xl font-bold">ASANHANI TK</div>
+  </div>
+  <a href="#calcCard" class="header-btn flex items-center gap-2"><i class="fa-solid fa-cart-shopping"></i> السلة</a>
+</header>
+
+<main class="max-w-7xl mx-auto p-6 grid lg:grid-cols-3 md:grid-cols-2 gap-10" id="phones-section">
+<!-- الهواتف ديناميكياً -->
+</main>
+
+<!-- قسم الآلة الحاسبة -->
+<section class="max-w-3xl mx-auto mt-20 bg-[#071a2f]/80 p-6 rounded-3xl shadow-2xl border border-white/10" id="calcCard">
+  <h2 class="text-2xl font-bold mb-4 text-center">💰 حاسبة الأقساط وتحويل العملات</h2>
+  
+  <div class="space-y-3">
+    <div>
+      <label class="text-gray-300 text-sm">الهاتف المحدد:</label>
+      <div id="selectedProduct" class="font-bold mt-1">لم يتم الاختيار</div>
+    </div>
+
+    <div>
+      <label class="text-gray-300 text-sm">سعر الهاتف بالدولار</label>
+      <input id="price" type="number" class="w-full p-2 rounded-lg bg-[#0b223a] border border-white/20 text-white" value="0">
+    </div>
+
+    <div>
+      <label class="text-gray-300 text-sm">المقدم بالدولار</label>
+      <input id="down" type="number" class="w-full p-2 rounded-lg bg-[#0b223a] border border-white/20 text-white" value="0">
+    </div>
+
+    <div>
+      <label class="text-gray-300 text-sm">عدد الشهور</label>
+      <input id="months" type="number" class="w-full p-2 rounded-lg bg-[#0b223a] border border-white/20 text-white" min="1" max="12" value="1">
+    </div>
+
+    <div>
+      <label class="text-gray-300 text-sm">اختر العملة للعرض</label>
+      <select id="currency" class="w-full p-2 rounded-lg bg-[#0b223a] border border-white/20 text-white">
+        <option value="USD">دولار</option>
+        <option value="SAR">ريال سعودي</option>
+        <option value="YER">ريال يمني</option>
+      </select>
+    </div>
+
+    <div class="flex gap-4 mt-4">
+      <button onclick="calculate()" class="flex-1 bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-bold py-2 rounded-xl">احسب القسط</button>
+      <button onclick="resetCalc()" class="flex-1 bg-transparent border border-gray-400 text-white py-2 rounded-xl">إعادة</button>
+    </div>
+
+    <div id="result" class="mt-4 text-center font-bold text-lg text-yellow-300"></div>
+  </div>
+
+  <div class="flex justify-center gap-3 mt-6">
+    <a href="https://wa.me/967773333413" target="_blank" class="w-10 h-10 flex items-center justify-center bg-green-500 rounded-full text-white"><i class="fa-brands fa-whatsapp"></i></a>
+    <a href="https://wa.me/967776896504" target="_blank" class="w-10 h-10 flex items-center justify-center bg-green-500 rounded-full text-white"><i class="fa-brands fa-whatsapp"></i></a>
+    <a href="#" target="_blank" class="w-10 h-10 flex items-center justify-center bg-blue-500 rounded-full text-white"><i class="fa-brands fa-telegram"></i></a>
+    <a href="#" target="_blank" class="w-10 h-10 flex items-center justify-center bg-pink-500 rounded-full text-white"><i class="fa-brands fa-instagram"></i></a>
+    <a href="#" target="_blank" class="w-10 h-10 flex items-center justify-center bg-red-500 rounded-full text-white"><i class="fa-brands fa-tiktok"></i></a>
+  </div>
+</section>
+
+<footer class="text-center text-gray-400 mt-10 mb-6">
+  حقوق الملكية © <span id="year"></span> ASANHANI TK — جميع الحقوق محفوظة.
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// أسماء وأسعار وهمية يمكن تعديلها لاحقًا
+const phones = [
+  {model:'Galaxy Ultra X', prices:{'128':999,'256':1099,'512':1199}, img:'https://via.placeholder.com/280x460/06182a/ffffff?text=Galaxy+Ultra+X'},
+  {model:'iPhone Z12', prices:{'128':1100,'256':1200,'512':1300}, img:'https://via.placeholder.com/280x460/06182a/ffffff?text=iPhone+Z12'},
+  {model:'Redmi Note Pro', prices:{'128':300,'256':350,'512':400}, img:'https://via.placeholder.com/280x460/06182a/ffffff?text=Redmi+Note+Pro'},
+  {model:'Pixel Max 9', prices:{'128':950,'256':1050,'512':1150}, img:'https://via.placeholder.com/280x460/06182a/ffffff?text=Pixel+Max+9'},
+  {model:'OnePlus Nova', prices:{'128':800,'256':900,'512':1000}, img:'https://via.placeholder.com/280x460/06182a/ffffff?text=OnePlus+Nova'},
+  {model:'Moto Xtreme', prices:{'128':500,'256':550,'512':600}, img:'https://via.placeholder.com/280x460/06182a/ffffff?text=Moto+Xtreme'},
+  {model:'Nokia Titan', prices:{'128':450,'256':500,'512':550}, img:'https://via.placeholder.com/280x460/06182a/ffffff?text=Nokia+Titan'}
+];
+
+const container = document.querySelector('#phones-section');
+
+phones.forEach((p,idx)=>{
+  const card=document.createElement('div');
+  card.className='tilt-card';
+  card.innerHTML=`
+    <div class="tilt-inner bg-gradient-to-br from-[#07172a]/80 to-[#0a1b2b]/80 border border-white/10 shadow-2xl p-5">
+      <div class="relative overflow-hidden rounded-3xl">
+        <div class="relative flex justify-center items-center">
+          <div class="w-60 h-96 rounded-3xl shadow-2xl flex items-center justify-center bg-gradient-to-b from-[#0f172a] to-[#061026]">
+            <img src="${p.img}" alt="${p.model}" class="w-full h-full object-cover rounded-3xl"/>
+          </div>
+        </div>
+        <div class="mt-4">
+          <div class="flex justify-between items-center">
+            <div class="text-lg font-bold flex items-center gap-2">${p.model} <i class="fa-solid fa-circle-info text-sm text-gray-400"></i></div>
+            <div class="price-tag" id="price-${idx}">${p.prices['128']}$</div>
+          </div>
+          <select class="bg-[#041428]/70 text-white px-2 py-1 rounded mt-2 w-full" id="cap-${idx}">
+            <option value="128">128 GB</option>
+            <option value="256">256 GB</option>
+            <option value="512">512 GB</option>
+          </select>
+          <div class="flex gap-2 mt-3">
+            <button class="flex-1 neon-btn bg-gradient-to-r from-green-400 to-blue-500 text-black font-bold rounded-full py-2" onclick="selectProductFromCard(${idx})">تقسيط</button>
+            <button class="flex-1 neon-btn bg-gradient-to-r from-purple-400 to-pink-500 text-black font-bold rounded-full py-2" onclick="addToCart(${idx})">كاش</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  container.appendChild(card);
+
+  document.getElementById(`cap-${idx}`).addEventListener('change',(e)=>{
+    const cap=e.target.value;
+    document.getElementById(`price-${idx}`).textContent=p.prices[cap]+'$';
+  });
+
+  const inner=card.querySelector('.tilt-inner');
+  card.addEventListener('mousemove',e=>{
+    const rect=card.getBoundingClientRect();
+    const px=(e.clientX-rect.left)/rect.width;
+    const py=(e.clientY-rect.top)/rect.height;
+    const rx=(py-0.5)*12;
+    const ry=(px-0.5)*-18;
+    gsap.to(inner,{rotationX:rx,rotationY:ry,scale:1.04,duration:0.4,ease:"power3.out"});
+  });
+  card.addEventListener('mouseleave',()=>gsap.to(inner,{rotationX:0,rotationY:0,scale:1,duration:0.6,ease:"elastic.out(1,.6)"}));
+});
+
+// دالة تحديد الهاتف للحاسبة عند الضغط على "تقسيط"
+function selectProductFromCard(idx){
+  const cap=document.getElementById(`cap-${idx}`).value;
+  const price=phones[idx].prices[cap];
+  const name=phones[idx].model+' '+cap+'GB';
+  selectProduct(name,price);
+  document.getElementById('calcCard').scrollIntoView({behavior:'smooth'});
+}
+
+// دالة الإضافة للسلة والواتساب
+function addToCart(idx){
+  const cap=document.getElementById(`cap-${idx}`).value;
+  const phone=phones[idx];
+  const item={model:phone.model,capacity:cap,price:phone.prices[cap],img:phone.img};
+  let cart=JSON.parse(localStorage.getItem('cart')||'[]');
+  cart.push(item);
+  localStorage.setItem('cart',JSON.stringify(cart));
+  const msg=`مرحباً، أود شراء ${item.model} ${item.capacity}GB بسعر ${item.price}$`;
+  window.open(`https://wa.me/967773333413?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+// منطق الآلة الحاسبة
+const increaseMap={1:7,2:12,3:16,4:20,5:23,6:25,7:28,8:31,9:34,10:36,11:39,12:41};
+const rates={USD:1,SAR:3.8,YER:540};
+
+function selectProduct(name,price){
+  document.getElementById('selectedProduct').textContent=name+' — '+price+'$';
+  document.getElementById('price').value=price;
+}
+
+function calculate(){
+  let P=parseFloat(document.getElementById('price').value)||0;
+  let D=parseFloat(document.getElementById('down').value)||0;
+  let months=parseInt(document.getElementById('months').value)||1;
+  if(months<1)months=1;
+  if(months>12)months=12;
+  let remaining=P-D;
+  if(remaining<0)remaining=0;
+  let perc=increaseMap[months]||0;
+  let increaseUSD=remaining*perc/100;
+  let totalUSD=remaining+increaseUSD;
+  let monthlyUSD=totalUSD/months;
+
+  let currency=document.getElementById('currency').value;
+  let rate=rates[currency];
+  let displayTotal=(totalUSD*rate).toFixed(2);
+  let displayMonthly=(monthlyUSD*rate).toFixed(2);
+  let displayIncrease=(increaseUSD*rate).toFixed(2);
+
+  document.getElementById('result').innerHTML=
+    `القسط الشهري: ${displayMonthly} ${currency}<br>إجمالي بعد ${months} شهر: ${displayTotal} ${currency}<br>الزيادة على المبلغ المتبقي: ${displayIncrease} ${currency}`;
+}
+
+function resetCalc(){
+  document.getElementById('price').value=0;
+  document.getElementById('down').value=0;
+  document.getElementById('months').value=1;
+  document.getElementById('currency').value='USD';
+  document.getElementById('selectedProduct').textContent='لم يتم الاختيار';
+  document.getElementById('result').textContent='';
+}
+</script>
+
+</body>
+</html>

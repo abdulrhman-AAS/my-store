@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ASANHANI TK — متجر الإلكترونيات الفخم</title>
+
+  <!-- Tailwind (Play CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'brand-blue': '#06203A',
+            'brand-gold': '#D4AF37',
+            'neon-purple': '#8A2BE2',
+            'neon-cyan': '#00E5FF'
+          },
+          boxShadow: {
+            'neon-lg': '0 20px 60px rgba(138,43,226,0.18), 0 6px 24px rgba(0,229,255,0.08)'
+          },
+          blur: {
+            'xl': '40px'
+          }
+        }
+      }
+    }
+  </script>
+
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <style>
+    :root { --glass: rgba(255,255,255,0.06); }
+    .orb { position: absolute; filter: blur(40px); opacity: 0.85; mix-blend-mode: screen; transform: translateZ(0); }
+    .neon-btn { box-shadow: 0 8px 30px rgba(138,43,226,0.12), 0 0 12px rgba(0,229,255,0.06); transition: transform .22s ease, box-shadow .22s ease; }
+    .neon-btn:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 20px 60px rgba(138,43,226,0.18), 0 0 30px rgba(0,229,255,0.12); }
+    .tilt-card { perspective: 1200px; }
+    .tilt-inner { transform-style: preserve-3d; transition: transform .35s cubic-bezier(.2,.9,.32,1), box-shadow .35s; will-change: transform; }
+    .promo-badge { background: linear-gradient(90deg, rgba(212,175,55,0.95), rgba(138,43,226,0.95)); color: #071028; font-weight: 800; box-shadow: 0 8px 30px rgba(0,0,0,0.2); border-radius: 9999px; }
+    @media (max-width: 768px) { .orb { filter: blur(28px); } }
+    body { -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-[#041428] via-[#06182a] to-[#0a2133] text-white antialiased">
+
+  <div aria-hidden="true" class="fixed inset-0 -z-10 overflow-hidden">
+    <div id="orb1" class="orb w-96 h-96 rounded-full right-10 top-16 bg-[radial-gradient(circle_at_30%_30%,_rgba(138,43,226,0.85),_transparent_40%)]"></div>
+    <div id="orb2" class="orb w-80 h-80 rounded-full left-6 top-[20vh] bg-[radial-gradient(circle_at_50%_50%,_rgba(0,229,255,0.7),_transparent_40%)]"></div>
+    <div id="orb3" class="orb w-72 h-72 rounded-full right-0 bottom-10 bg-[radial-gradient(circle_at_10%_70%,_rgba(212,175,55,0.6),_transparent_40%)]"></div>
+  </div>
+
+  <header class="sticky top-0 z-40">
+    <nav class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <a href="#" class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-r from-neon-purple to-neon-cyan flex items-center justify-center shadow-neon-lg">
+            <i class="fa-solid fa-bolt text-white text-xl"></i>
+          </div>
+          <div class="leading-tight">
+            <div class="text-lg font-extrabold text-white">ASANHANI TK</div>
+            <div class="text-xs text-gray-300 -mt-0.5">متجر الإلكترونيات والهواتف</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="hidden md:flex items-center gap-6">
+        <a href="#" class="text-sm font-semibold text-gray-200 hover:text-neon-cyan transition">الرئيسية</a>
+        <a href="الهواتف.html" class="text-sm font-semibold text-gray-200 hover:text-neon-cyan transition">الهواتف</a>
+        <a href="الاكترونيات.html" class="text-sm font-semibold text-gray-200 hover:text-neon-cyan transition">الإلكترونيات</a>
+        <a href="الادوات المنزلية.html" class="text-sm font-semibold text-gray-200 hover:text-neon-cyan transition">الأدوات المنزلية</a>
+        <a href="الوثيقة.html" class="text-sm font-semibold text-gray-200 hover:text-neon-cyan transition">الشروط والأحكام</a>
+        <a href="tel:+967773333413" class="ml-3 inline-flex items-center gap-2 py-2 px-4 rounded-full neon-btn bg-gradient-to-r from-[#0ea5e9] to-[#7c3aed] text-white text-sm font-bold">
+          <i class="fa-brands fa-whatsapp"></i> تواصل الآن
+        </a>
+      </div>
+
+      <div class="md:hidden">
+        <button id="mobileToggle" class="p-2 rounded-md bg-white/5">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 py-12">
+    <section class="grid lg:grid-cols-2 gap-8 items-center">
+      <div data-aos="fade-right" data-aos-delay="100">
+        <h1 class="text-4xl lg:text-5xl font-extrabold leading-tight mb-4" style="text-shadow:0 6px 30px rgba(0,0,0,0.5);">
+          أجهزة وتكنولوجيا <span class="bg-clip-text text-transparent bg-gradient-to-r from-neon-cyan via-neon-purple to-brand-gold">تشد الأنفاس</span>
+        </h1>
+
+        <div class="flex flex-wrap gap-4">
+          <a href="الهواتف.html" class="neon-btn inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-neon-cyan to-neon-purple text-black font-bold shadow">
+            تصفح الهواتف <i class="fa-solid fa-arrow-left"></i>
+          </a>
+          <a href="الاكترونيات.html" class="inline-flex items-center gap-3 px-5 py-3 rounded-full border border-white/10 text-sm text-white/90 hover:bg-white/5 transition">
+            اكتشف الإلكترونيات
+          </a>
+        </div>
+
+        <div class="mt-8 flex gap-6">
+          <div class="text-center">
+            <div class="text-2xl font-extrabold">24/7</div>
+            <div class="text-sm text-gray-400">دعم متواصل</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tilt-card" data-aos="zoom-in" data-aos-delay="200">
+        <div id="card" class="tilt-inner bg-gradient-to-br from-[#07172a]/60 to-[#0a1b2b]/60 border border-white/5 rounded-2xl p-6 shadow-neon-lg">
+          <div class="relative overflow-hidden rounded-xl">
+            <div class="relative bg-gradient-to-b from-[#07192a] to-[#041428] px-6 py-8 flex items-center justify-center">
+              <div class="w-56 h-96 rounded-3xl bg-gradient-to-b from-[#0f172a] to-[#061026] shadow-2xl transform -rotate-6" style="backdrop-filter: blur(6px);">
+                <div class="w-full h-full rounded-3xl flex items-center justify-center" style="background: linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.02));">
+                  <img src="https://via.placeholder.com/260x430/06182a/ffffff?text=ASANHANI+TK" alt="Phone mock" class="w-full h-full object-cover rounded-3xl" />
+                </div>
+              </div>
+
+              <div class="absolute left-6 bottom-6 bg-white/5 px-3 py-2 rounded-lg text-sm">
+                <div class="font-bold">Galaxy X Pro</div>
+                <div class="text-xs text-gray-300">ذاكرة 256GB • كاميرا 108MP</div>
+              </div>
+            </div>
+
+<div class="p-4 bg-gradient-to-t from-white/3 to-transparent">
+  <div class="flex items-center justify-between">
+    <div>
+      <div class="text-lg font-bold">Galaxy X Pro</div>
+      <div class="text-sm text-gray-300">أفضل اختيار لمحبي التصوير</div>
+    </div>
+    <div class="text-right">
+      <div class="text-sm text-gray-400 line-through">$200</div>
+      <div class="text-2xl font-extrabold text-brand-gold">$160</div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <a href="الهواتف.html" class="flex-1 block text-center py-2 rounded-md bg-gradient-to-r from-neon-cyan to-neon-purple text-black font-bold neon-btn">
+      أضف إلى السلة
+    </a>
+  </div>
+</div>
+
+    </section>
+
+    <section class="mt-20 grid md:grid-cols-3 gap-8">
+      <article class="bg-white/5 rounded-2xl p-6 tilt-card" data-aos="fade-up" data-aos-delay="100">
+  <a href="الهواتف.html" class="block">
+    <div class="tilt-inner p-1 rounded-xl">
+      <div class="flex items-start gap-4">
+        <div class="w-14 h-14 rounded-lg bg-gradient-to-br from-neon-purple to-neon-cyan flex items-center justify-center">
+          <i class="fa-solid fa-mobile-screen text-xl"></i>
+        </div>
+        <div>
+          <h3 class="font-bold">قسم الهواتف</h3>
+          <p class="text-sm text-gray-300">أحدث الإصدارات من أفضل العلامات التجارية.</p>
+        </div>
+      </div>
+    </div>
+  </a>
+</article>
+
+
+ <article class="bg-white/5 rounded-2xl p-6 tilt-card" data-aos="fade-up" data-aos-delay="200">
+  <a href="الاكترونيات.html" class="block">
+    <div class="tilt-inner p-1 rounded-xl">
+      <div class="flex items-start gap-4">
+        <div class="w-14 h-14 rounded-lg bg-gradient-to-br from-neon-cyan to-neon-purple flex items-center justify-center">
+          <i class="fa-solid fa-tv text-xl"></i>
+        </div>
+        <div>
+          <h3 class="font-bold">الإلكترونيات</h3>
+          <p class="text-sm text-gray-300">شاشات، كاميرات، صوتيات عالية الجودة.</p>
+        </div>
+      </div>
+    </div>
+  </a>
+</article>
+
+
+      <article class="bg-white/5 rounded-2xl p-6 tilt-card" data-aos="fade-up" data-aos-delay="300">
+  <a href="الادوات المنزلية.html" class="block">
+    <div class="tilt-inner p-1 rounded-xl">
+      <div class="flex items-start gap-4">
+        <div class="w-14 h-14 rounded-lg bg-gradient-to-br from-[#D4AF37] to-neon-purple flex items-center justify-center">
+          <i class="fa-solid fa-house text-xl"></i>
+        </div>
+        <div>
+          <h3 class="font-bold">الأدوات المنزلية</h3>
+          <p class="text-sm text-gray-300">أجهزة منزلية ذكية موثوقة.</p>
+        </div>
+      </div>
+    </div>
+  </a>
+</article>
+    </section>
+
+    <section class="mt-20 grid lg:grid-cols-3 gap-8">
+      <div class="col-span-2 bg-white/4 rounded-2xl p-6" data-aos="fade-right">
+        <h3 class="font-bold text-2xl mb-3">لماذا يختار العملاء ASANHANI TK</h3>
+        <p class="text-gray-300 mb-6">ضمان أصلي، شحن سريع، وخدمة عملاء متميزة. نقدم تجربة تسوّق ترضي الذائقة الراقية.</p>
+        <div class="grid sm:grid-cols-3 gap-4">
+          <div class="p-4 bg-white/5 rounded-lg">
+            <div class="font-extrabold text-2xl">١٠٠+</div>
+            <div class="text-sm text-gray-300">عرض متجدد أسبوعي</div>
+          </div>
+          <div class="p-4 bg-white/5 rounded-lg">
+            <div class="font-extrabold text-2xl">٩.٥/١٠</div>
+            <div class="text-sm text-gray-300">تقييم العملاء</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="bg-gradient-to-br from-[#07192a] to-[#041428] rounded-2xl p-6 border border-white/5" data-aos="fade-left">
+        <h4 class="font-bold mb-3">تواصل سريع</h4>
+        <p class="text-gray-300 text-sm mb-4">استفسارات؟ ارسل رسالة وسنرد خلال دقائق.</p>
+        <a href="https://wa.me/967773333413" target="_blank" class="inline-flex items-center gap-3 px-4 py-3 rounded-full neon-btn bg-gradient-to-r from-neon-cyan to-neon-purple text-black font-bold">
+          <i class="fa-brands fa-whatsapp"></i> إرسال رسالة
+        </a>
+      </aside>
+    </section>
+
+    <footer class="mt-24 text-center text-gray-300">
+      <div class="max-w-3xl mx-auto">
+        <p class="mb-4">حقوق الملكية © <span id="year"></span> — ASANHANI TK. جميع الحقوق محفوظة.</p>
+        <div class="flex justify-center gap-4">
+          <a href="#" class="text-gray-300 hover:text-neon-cyan"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="text-gray-300 hover:text-neon-cyan"><i class="fa-brands fa-telegram"></i></a>
+          <a href="#" class="text-gray-300 hover:text-neon-cyan"><i class="fa-brands fa-facebook"></i></a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 800, once: true, easing: 'ease-out-cubic' });
+    document.getElementById('year').textContent = new Date().getFullYear();
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.to("#orb1", { x: -60, y: -30, duration: 8, repeat: -1, yoyo: true, ease: "sine.inOut" });
+    gsap.to("#orb2", { x: 40, y: 25, duration: 10, repeat: -1, yoyo: true, ease: "sine.inOut" });
+    gsap.to("#orb3", { x: -30, y: 60, duration: 12, repeat: -1, yoyo: true, ease: "sine.inOut" });
+
+    gsap.fromTo("h1", { y: 0 }, {
+      y: -30,
+      scrollTrigger: { trigger: "main", start: "top top", end: "bottom top", scrub: 0.6 }
+    });
+
+    const card = document.getElementById('card');
+    if (card) {
+      const wrap = card.parentElement;
+      wrap.addEventListener('mousemove', (e) => {
+        const rect = wrap.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width;
+        const py = (e.clientY - rect.top) / rect.height;
+        const rx = (py - 0.5) * 12;
+        const ry = (px - 0.5) * -18;
+        gsap.to(card, { rotationX: rx, rotationY: ry, scale: 1.02, transformPerspective: 1200, ease: "power3.out", duration: 0.45 });
+      });
+      wrap.addEventListener('mouseleave', () => {
+        gsap.to(card, { rotationX: 0, rotationY: 0, scale: 1, duration: 0.6, ease: "elastic.out(1, .6)" });
+      });
+    }
+
+    document.querySelectorAll('.tilt-card').forEach((el) => {
+      el.addEventListener('mouseenter', () => gsap.to(el.querySelector('.tilt-inner'), { y: -8, boxShadow: "0 20px 50px rgba(0,0,0,0.5)", duration: .35 }));
+      el.addEventListener('mouseleave', () => gsap.to(el.querySelector('.tilt-inner'), { y: 0, boxShadow: "none", duration: .45 }));
+    });
+
+    gsap.utils.toArray('[data-aos]').forEach((el) => {
+      ScrollTrigger.create({
+        trigger: el,
+        start: "top 80%",
+        onEnter: () => { gsap.fromTo(el, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" }); }
+      });
+    });
+
+    const quickBtn = document.getElementById('quickView');
+    if (quickBtn) {
+      quickBtn.addEventListener('click', () => {
+        const modal = document.createElement('div');
+        modal.className = 'fixed inset-0 z-50 flex items-center justify-center';
+        modal.innerHTML = `
+          <div class="absolute inset-0 bg-black/70"></div>
+          <div class="relative bg-[#071428] rounded-2xl p-6 max-w-lg w-full ring-1 ring-white/5">
+            <button id="closeModal" class="absolute top-4 left-4 text-white/60 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-2xl font-bold mb-2">عرض سريع — Galaxy X Pro</h3>
+            <p class="text-gray-300 mb-4">تفاصيل المنتج، المواصفات السريعة، وخيارات التقسيط هنا. هذا مثال للـquick view.</p>
+            <div class="flex gap-3 justify-end">
+              <a href="الهواتف.html" class="px-4 py-2 rounded-full bg-gradient-to-r from-neon-cyan to-neon-purple text-black font-bold">تفاصيل المنتج</a>
+              <button id="close2" class="px-4 py-2 rounded-full border border-white/10">إغلاق</button>
+            </div>
+          </div>`;
+        document.body.appendChild(modal);
+        modal.querySelector('#closeModal').onclick = () => modal.remove();
+        modal.querySelector('#close2').onclick = () => modal.remove();
+      });
+    }
+
+    document.getElementById('mobileToggle').addEventListener('click', () => {
+      const menu = document.querySelector('nav ul');
+      if (!menu) return;
+      menu.classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>
