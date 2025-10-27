@@ -145,9 +145,9 @@ phones.forEach((p,idx)=>{
     <div class="tilt-inner bg-gradient-to-br from-[#07172a]/80 to-[#0a1b2b]/80 border border-white/10 shadow-2xl p-5">
       <div class="relative overflow-hidden rounded-3xl">
         <div class="relative flex justify-center items-center">
-          <div class="w-60 h-96 rounded-3xl shadow-2xl flex items-center justify-center bg-gradient-to-b from-[#0f172a] to-[#061026]">
-            <img src="${p.img}" alt="${p.model}" class="w-full h-full object-cover rounded-3xl"/>
-          </div>
+ <div class="w-60 h-96 rounded-3xl shadow-2xl flex items-center justify-center bg-[#0f172a]">
+  <img src="${p.img}" alt="${p.model}" class="max-w-full max-h-full object-contain rounded-2xl"/>
+</div>
         </div>
         <div class="mt-4">
           <div class="flex justify-between items-center">
@@ -251,5 +251,6 @@ function resetCalc(){
 
 </body>
 </html>
+
 
 
