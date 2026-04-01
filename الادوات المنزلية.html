@@ -1,264 +1,599 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ASANHANI TK — أدوات منزلية</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-<style>
-body {
-  font-family:Tajawal,Arial,sans-serif;
-  background: radial-gradient(circle at 20% 30%,#0a1b2b, #041428, #06182a);
-  color:white;
-  overflow-x:hidden;
-}
-.tilt-card { perspective:1500px; }
-.tilt-inner {
-  transform-style:preserve-3d;
-  transition:transform .35s cubic-bezier(.2,.9,.32,1);
-  will-change:transform;
-  border-radius:24px;
-  overflow:hidden;
-}
-.neon-btn {
-  box-shadow:0 8px 30px rgba(138,43,226,0.12),0 0 12px rgba(0,229,255,0.06);
-  transition:transform .22s ease,box-shadow .22s ease, background .22s ease;
-}
-.neon-btn:hover {
-  transform:translateY(-6px) scale(1.05);
-  box-shadow:0 20px 60px rgba(138,43,226,0.28),0 0 40px rgba(0,229,255,0.2);
-}
-.header-btn {
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(6px);
-  padding:6px 12px;
-  border-radius:12px;
-  font-weight:700;
-  transition:0.25s;
-}
-.header-btn:hover{ background: rgba(255,255,255,0.25); }
-.price-tag{
-  background:linear-gradient(90deg,#ffdd00,#ff8800);
-  padding:4px 12px;
-  border-radius:12px;
-  font-weight:800;
-  color:#0b0b0b;
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>ASANHANI TK — أدوات منزلية</title>
+  <meta name="description" content="قسم الأدوات المنزلية في ASANHANI TK — منتجات منزلية فخمة، تأثيرات قوية، وحاسبة أقساط وتحويل عملات.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Cairo', 'ui-sans-serif', 'system-ui']
+          },
+          colors: {
+            'brand-blue': '#06203A',
+            'brand-gold': '#D4AF37',
+            'neon-purple': '#8A2BE2',
+            'neon-cyan': '#00E5FF'
+          },
+          boxShadow: {
+            'neon-lg': '0 26px 90px rgba(138,43,226,0.22), 0 12px 45px rgba(0,229,255,0.10)',
+            'glass': '0 18px 60px rgba(0,0,0,0.35)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body{
+      font-family:Cairo,Arial,sans-serif;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(0,229,255,.10), transparent 26%),
+        radial-gradient(circle at 78% 18%, rgba(138,43,226,.12), transparent 28%),
+        radial-gradient(circle at 90% 80%, rgba(212,175,55,.10), transparent 24%),
+        linear-gradient(180deg,#041428 0%, #06182a 45%, #0a2133 100%);
+      color:white;
+      overflow-x:hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .glass-header{
+      background: linear-gradient(180deg, rgba(4,20,40,0.82), rgba(4,20,40,0.38));
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .orb{
+      position:absolute;
+      filter:blur(48px);
+      opacity:.85;
+      mix-blend-mode:screen;
+      pointer-events:none;
+    }
+
+    .tilt-card{ perspective:1500px; }
+
+    .tilt-inner{
+      transform-style:preserve-3d;
+      transition:transform .35s cubic-bezier(.2,.9,.32,1), box-shadow .35s ease;
+      will-change:transform;
+      border-radius:28px;
+      overflow:hidden;
+    }
+
+    .neon-btn{
+      box-shadow:0 12px 38px rgba(138,43,226,0.16),0 0 18px rgba(0,229,255,0.08);
+      transition:transform .22s ease, box-shadow .22s ease, background .22s ease, filter .22s ease;
+    }
+
+    .neon-btn:hover{
+      transform:translateY(-6px) scale(1.03);
+      box-shadow:0 30px 96px rgba(138,43,226,0.24),0 0 40px rgba(0,229,255,0.14);
+      filter:saturate(1.08);
+    }
+
+    .header-btn{
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(8px);
+      padding:10px 14px;
+      border-radius:16px;
+      font-weight:800;
+      transition:.25s;
+    }
+
+    .header-btn:hover{
+      background: rgba(255,255,255,0.12);
+    }
+
+    .price-tag{
+      background:linear-gradient(90deg,#D4AF37,#ff9900);
+      padding:6px 14px;
+      border-radius:14px;
+      font-weight:900;
+      color:#071018;
+      box-shadow:0 10px 30px rgba(212,175,55,.22);
+      white-space:nowrap;
+    }
+
+    .shine{
+      position:relative;
+      overflow:hidden;
+      isolation:isolate;
+    }
+
+    .shine::after{
+      content:"";
+      position:absolute;
+      inset:-140%;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,.16), transparent);
+      transform:rotate(22deg) translateX(-42%);
+      opacity:0;
+      pointer-events:none;
+    }
+
+    .shine:hover::after{
+      opacity:1;
+      animation:shine 1s ease;
+    }
+
+    @keyframes shine{
+      to{ transform:rotate(22deg) translateX(42%); }
+    }
+
+    .glass-card{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: 0 18px 60px rgba(0,0,0,.30);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .custom-input, .custom-select{
+      width:100%;
+      padding:12px 14px;
+      border-radius:16px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.12);
+      color:white;
+      outline:none;
+      transition:.2s ease;
+    }
+
+    .custom-input:focus, .custom-select:focus{
+      border-color:rgba(0,229,255,.55);
+      box-shadow:0 0 0 3px rgba(0,229,255,.12);
+    }
+
+    .custom-select option{ color:black; }
+
+    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible{
+      outline:2px solid rgba(0,229,255,.7);
+      outline-offset:3px;
+    }
+
+    @media (max-width: 768px){
+      .orb{ filter:blur(28px); opacity:.68; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *{
+        animation:none !important;
+        transition:none !important;
+        scroll-behavior:auto !important;
+      }
+    }
+  </style>
 </head>
 <body class="antialiased">
 
-<header class="sticky top-0 bg-[#06203A]/90 backdrop-blur-md p-4 z-50 flex justify-between items-center max-w-7xl mx-auto rounded-b-3xl">
-  <div class="flex items-center gap-4">
-    <a href="index.html" class="header-btn flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> رجوع</a>
-    <div class="text-2xl font-bold">ASANHANI TK</div>
+  <!-- Background -->
+  <div aria-hidden="true" class="fixed inset-0 -z-10 overflow-hidden">
+    <div id="orb1" class="orb w-[22rem] h-[22rem] rounded-full top-10 right-0 bg-[radial-gradient(circle_at_30%_30%,_rgba(138,43,226,.86),_transparent_46%)]"></div>
+    <div id="orb2" class="orb w-[18rem] h-[18rem] rounded-full left-0 top-[28vh] bg-[radial-gradient(circle_at_50%_50%,_rgba(0,229,255,.72),_transparent_48%)]"></div>
+    <div id="orb3" class="orb w-[16rem] h-[16rem] rounded-full bottom-12 right-[18%] bg-[radial-gradient(circle_at_40%_40%,_rgba(212,175,55,.55),_transparent_52%)]"></div>
   </div>
-  <a href="#calcCard" class="header-btn flex items-center gap-2"><i class="fa-solid fa-cart-shopping"></i> السلة</a>
-</header>
 
-<main class="max-w-7xl mx-auto p-6 grid lg:grid-cols-3 md:grid-cols-2 gap-10" id="products-section">
-<!-- المنتجات المنزلية ديناميكياً -->
-</main>
+  <!-- Header -->
+  <header class="sticky top-0 z-50 glass-header">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3 sm:gap-4">
+        <a href="index.html" class="header-btn flex items-center gap-2 shine">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span class="hidden sm:inline">رجوع</span>
+        </a>
 
-<section class="max-w-3xl mx-auto mt-20 bg-[#071a2f]/80 p-6 rounded-3xl shadow-2xl border border-white/10" id="calcCard">
-  <h2 class="text-2xl font-bold mb-4 text-center">💰 حاسبة الأقساط وتحويل العملات</h2>
-  <div class="space-y-3">
-    <div>
-      <label class="text-gray-300 text-sm">المنتج المحدد:</label>
-      <div id="selectedProduct" class="font-bold mt-1">لم يتم الاختيار</div>
-    </div>
-
-    <div>
-      <label class="text-gray-300 text-sm">سعر المنتج بالدولار</label>
-      <input id="price" type="number" class="w-full p-2 rounded-lg bg-[#0b223a] border border-white/20 text-white" value="0">
-    </div>
-
-    <div>
-      <label class="text-gray-300 text-sm">المقدم بالدولار</label>
-      <input id="down" type="number" class="w-full p-2 rounded-lg bg-[#0b223a] border border-white/20 text-white" value="0">
-    </div>
-
-    <div>
-      <label class="text-gray-300 text-sm">عدد الشهور</label>
-      <input id="months" type="number" class="w-full p-2 rounded-lg bg-[#0b223a] border border-white/20 text-white" min="1" max="12" value="1">
-    </div>
-
-    <div>
-      <label class="text-gray-300 text-sm">اختر العملة للعرض</label>
-      <select id="currency" class="w-full p-2 rounded-lg bg-[#0b223a] border border-white/20 text-white">
-        <option value="USD">دولار</option>
-        <option value="SAR">ريال سعودي</option>
-        <option value="YER">ريال يمني</option>
-      </select>
-    </div>
-
-    <div class="flex gap-4 mt-4">
-      <button onclick="calculate()" class="flex-1 bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-bold py-2 rounded-xl">احسب القسط</button>
-      <button onclick="resetCalc()" class="flex-1 bg-transparent border border-gray-400 text-white py-2 rounded-xl">إعادة</button>
-    </div>
-
-    <div id="result" class="mt-4 text-center font-bold text-lg text-yellow-300"></div>
-
-    <div class="flex justify-center gap-3 mt-6">
-      <a href="https://wa.me/967773333413" target="_blank" class="w-10 h-10 flex items-center justify-center bg-green-500 rounded-full text-white"><i class="fa-brands fa-whatsapp"></i></a>
-      <a href="https://wa.me/967776896504" target="_blank" class="w-10 h-10 flex items-center justify-center bg-green-500 rounded-full text-white"><i class="fa-brands fa-whatsapp"></i></a>
-      <a href="#" target="_blank" class="w-10 h-10 flex items-center justify-center bg-blue-500 rounded-full text-white"><i class="fa-brands fa-telegram"></i></a>
-      <a href="#" target="_blank" class="w-10 h-10 flex items-center justify-center bg-pink-500 rounded-full text-white"><i class="fa-brands fa-instagram"></i></a>
-      <a href="#" target="_blank" class="w-10 h-10 flex items-center justify-center bg-red-500 rounded-full text-white"><i class="fa-brands fa-tiktok"></i></a>
-    </div>
-  </div>
-</section>
-
-<footer class="text-center text-gray-400 mt-10 mb-6">
-  حقوق الملكية © <span id="year"></span> ASANHANI TK — جميع الحقوق محفوظة.
-</footer>
-
-<script>
-document.getElementById('year').textContent = new Date().getFullYear();
-
-const homeProducts = [
-  {name:'غسالة', options:{'7 كيلو':300,'10 كيلو':400,'12 كيلو':500}, img:'https://via.placeholder.com/280x460/06182a/ffffff?text=غسالة'},
-  {name:'غسالة', options:{'7 كيلو':300,'10 كيلو':400,'12 كيلو':500}, img:'https://via.placeholder.com/280x460/06182a/ffffff?text=غسالة'},
-  {name:'ثلاجة', options:{'250 لتر':350,'350 لتر':450,'500 لتر':600}, img:'https://via.placeholder.com/280x460/06182a/ffffff?text=ثلاجة'},
-  {name:'مايكروويف', price:120, img:'https://via.placeholder.com/280x460/06182a/ffffff?text=مايكروويف'},
-  {name:'مكواة', price:60, img:'https://via.placeholder.com/280x460/06182a/ffffff?text=مكواة'},
-  {name:'مكنسة كهربائية', price:150, img:'https://via.placeholder.com/280x460/06182a/ffffff?text=مكنسة'},
-  {name:'مروحة', price:50, img:'https://via.placeholder.com/280x460/06182a/ffffff?text=مروحة'},
-  {name:'سخان مياه', price:100, img:'https://via.placeholder.com/280x460/06182a/ffffff?text=سخان'},
-  {name:'خلاط', price:80, img:'https://via.placeholder.com/280x460/06182a/ffffff?text=خلاط'}
-];
-
-const container = document.querySelector('#products-section');
-
-homeProducts.forEach((p,idx)=>{
-  const card = document.createElement('div');
-  card.className = 'tilt-card';
-  const defaultPrice = p.price || (p.options ? Object.values(p.options)[0] : 0);
-
-  let optionsHTML = '';
-  if(p.options){
-    optionsHTML = `<label class="text-gray-300 text-sm mt-2 block">اختر السعة / الحجم:</label>
-    <select class="w-full p-2 rounded-lg bg-[#0b223a] border border-white/20 text-white mt-1" id="option-${idx}" onchange="onOptionChange(${idx})">`;
-    for(let key in p.options){
-      optionsHTML += `<option value="${key}">${key}</option>`;
-    }
-    optionsHTML += '</select>';
-  }
-
-  card.innerHTML = `
-    <div class="tilt-inner bg-gradient-to-br from-[#07172a]/80 to-[#0a1b2b]/80 border border-white/10 shadow-2xl p-5">
-      <div class="relative overflow-hidden rounded-3xl">
-        <div class="relative flex justify-center items-center">
-          <div class="w-60 h-96 rounded-3xl shadow-2xl flex items-center justify-center bg-gradient-to-b from-[#0f172a] to-[#061026]">
-            <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover rounded-3xl"/>
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-full bg-gradient-to-r from-brand-gold to-neon-purple flex items-center justify-center shadow-neon-lg text-[#071018]">
+            <i class="fa-solid fa-house"></i>
+          </div>
+          <div class="leading-tight">
+            <div class="text-base sm:text-xl font-extrabold">ASANHANI TK</div>
+            <div class="text-[11px] sm:text-xs text-gray-300">قسم الأدوات المنزلية</div>
           </div>
         </div>
-        <div class="mt-4">
-          <div class="flex justify-between items-center">
-            <div class="text-lg font-bold">${p.name}</div>
-            <div class="price-tag" id="price-display-${idx}">${defaultPrice}$</div>
+      </div>
+
+      <div class="hidden md:flex items-center gap-2">
+        <a href="index.html" class="header-btn shine">الرئيسية</a>
+        <a href="#products-section" class="header-btn shine">المنتجات</a>
+        <a href="#calcCard" class="header-btn shine flex items-center gap-2">
+          <i class="fa-solid fa-calculator"></i> الحاسبة
+        </a>
+      </div>
+
+      <div class="md:hidden">
+        <button id="mobileToggle" class="header-btn">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </nav>
+
+    <div id="mobileDrawer" class="md:hidden hidden px-4 pb-4">
+      <div class="glass-card rounded-2xl p-3">
+        <div class="grid gap-2">
+          <a href="index.html" class="header-btn text-center">الرئيسية</a>
+          <a href="#products-section" class="header-btn text-center">المنتجات</a>
+          <a href="#calcCard" class="header-btn text-center">الحاسبة</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-4">
+    <div class="grid lg:grid-cols-2 gap-8 items-center">
+      <div>
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-gray-200">
+          <i class="fa-solid fa-house text-brand-gold"></i>
+          منتجات منزلية مختارة بعناية
+        </div>
+
+        <h1 class="mt-5 text-4xl sm:text-5xl xl:text-6xl font-extrabold leading-[1.12]">
+          أدوات منزلية <span class="bg-clip-text text-transparent bg-gradient-to-r from-brand-gold via-neon-purple to-neon-cyan">بستايل فاخر</span>
+          <br>وتجربة عرض قوية
+        </h1>
+
+        <p class="mt-4 text-gray-300 text-base sm:text-lg max-w-2xl">
+          من الغسالات والثلاجات إلى الأجهزة الصغيرة — تصفح، اختر الحجم أو السعة، واحسب القسط أو اطلب مباشرة عبر واتساب.
+        </p>
+
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="#products-section" class="shine neon-btn inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-brand-gold to-neon-purple text-[#071018] font-extrabold">
+            ابدأ التصفح <i class="fa-solid fa-arrow-left"></i>
+          </a>
+          <a href="#calcCard" class="shine inline-flex items-center gap-3 px-5 py-3 rounded-full border border-white/12 hover:bg-white/5 transition font-semibold">
+            افتح الحاسبة
+          </a>
+        </div>
+      </div>
+
+      <div class="glass-card rounded-[2rem] p-5 sm:p-6">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="rounded-2xl bg-white/5 border border-white/10 p-4 text-center">
+            <div class="text-2xl font-extrabold">9</div>
+            <div class="text-xs text-gray-300 mt-1">منتجات</div>
           </div>
-          ${optionsHTML}
-          <div class="flex gap-2 mt-3">
-            <button class="flex-1 neon-btn bg-gradient-to-r from-green-400 to-blue-500 text-black font-bold rounded-full py-2" onclick="selectProductFromCard(${idx})">تقسيط</button>
-            <button class="flex-1 neon-btn bg-gradient-to-r from-purple-400 to-pink-500 text-black font-bold rounded-full py-2" onclick="buyCash(${idx})">كاش</button>
+          <div class="rounded-2xl bg-white/5 border border-white/10 p-4 text-center">
+            <div class="text-2xl font-extrabold">متنوع</div>
+            <div class="text-xs text-gray-300 mt-1">أحجام وخيارات</div>
+          </div>
+          <div class="rounded-2xl bg-white/5 border border-white/10 p-4 text-center">
+            <div class="text-2xl font-extrabold">12</div>
+            <div class="text-xs text-gray-300 mt-1">شهر تقسيط</div>
+          </div>
+          <div class="rounded-2xl bg-white/5 border border-white/10 p-4 text-center">
+            <div class="text-2xl font-extrabold">24/7</div>
+            <div class="text-xs text-gray-300 mt-1">تواصل</div>
           </div>
         </div>
       </div>
     </div>
-  `;
-  container.appendChild(card);
+  </section>
 
-  if(p.options){
-    document.getElementById(`option-${idx}`).addEventListener('change',(e)=>{
-      const cap=e.target.value;
-      document.getElementById(`price-display-${idx}`).textContent = p.options[cap]+'$';
+  <!-- Products -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 grid lg:grid-cols-3 md:grid-cols-2 gap-6 sm:gap-8" id="products-section">
+    <!-- المنتجات المنزلية ديناميكياً -->
+  </main>
+
+  <!-- Calculator -->
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 mt-16 sm:mt-20" id="calcCard">
+    <div class="glass-card rounded-[2rem] p-6 sm:p-8">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-r from-brand-gold to-neon-purple text-[#071018] flex items-center justify-center">
+          <i class="fa-solid fa-calculator"></i>
+        </div>
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold">حاسبة الأقساط وتحويل العملات</h2>
+          <p class="text-sm text-gray-300 mt-1">اختر المنتج واحسب القسط الشهري والإجمالي بسهولة.</p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="space-y-4">
+          <div class="rounded-2xl bg-white/5 border border-white/10 p-4">
+            <label class="text-gray-300 text-sm">المنتج المحدد</label>
+            <div id="selectedProduct" class="font-extrabold mt-2 text-lg">لم يتم الاختيار</div>
+          </div>
+
+          <div>
+            <label class="text-gray-300 text-sm block mb-2">سعر المنتج بالدولار</label>
+            <input id="price" type="number" class="custom-input" value="0">
+          </div>
+
+          <div>
+            <label class="text-gray-300 text-sm block mb-2">المقدم بالدولار</label>
+            <input id="down" type="number" class="custom-input" value="0">
+          </div>
+
+          <div>
+            <label class="text-gray-300 text-sm block mb-2">عدد الشهور</label>
+            <input id="months" type="number" class="custom-input" min="1" max="12" value="1">
+          </div>
+
+          <div>
+            <label class="text-gray-300 text-sm block mb-2">العملة</label>
+            <select id="currency" class="custom-select">
+              <option value="USD">دولار</option>
+              <option value="SAR">ريال سعودي</option>
+              <option value="YER">ريال يمني</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex flex-col">
+          <div class="rounded-3xl bg-gradient-to-br from-[#07192a] to-[#041428] border border-white/10 p-5 sm:p-6 flex-1">
+            <div class="text-lg font-extrabold mb-3">نتيجة الحساب</div>
+
+            <div id="result" class="min-h-[140px] rounded-2xl bg-white/5 border border-white/10 p-4 text-center flex items-center justify-center text-yellow-300 font-bold leading-8">
+              لم يتم إجراء الحساب بعد
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 mt-5">
+              <button onclick="calculate()" class="shine neon-btn bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-extrabold py-3 rounded-2xl">
+                احسب القسط
+              </button>
+              <button onclick="resetCalc()" class="shine border border-white/15 hover:bg-white/5 text-white py-3 rounded-2xl font-bold transition">
+                إعادة
+              </button>
+            </div>
+
+            <div class="mt-6">
+              <div class="text-sm text-gray-300 mb-3">تواصل سريع</div>
+              <div class="flex flex-wrap gap-3">
+                <a href="https://wa.me/967773333413" target="_blank" class="w-11 h-11 flex items-center justify-center bg-green-500 rounded-2xl text-white neon-btn">
+                  <i class="fa-brands fa-whatsapp"></i>
+                </a>
+                <a href="https://wa.me/967776896504" target="_blank" class="w-11 h-11 flex items-center justify-center bg-green-500 rounded-2xl text-white neon-btn">
+                  <i class="fa-brands fa-whatsapp"></i>
+                </a>
+                <a href="#" target="_blank" class="w-11 h-11 flex items-center justify-center bg-blue-500 rounded-2xl text-white neon-btn">
+                  <i class="fa-brands fa-telegram"></i>
+                </a>
+                <a href="#" target="_blank" class="w-11 h-11 flex items-center justify-center bg-pink-500 rounded-2xl text-white neon-btn">
+                  <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="#" target="_blank" class="w-11 h-11 flex items-center justify-center bg-red-500 rounded-2xl text-white neon-btn">
+                  <i class="fa-brands fa-tiktok"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="text-center text-gray-400 mt-14 mb-8 px-4">
+    <div class="max-w-3xl mx-auto glass-card rounded-3xl p-5">
+      حقوق الملكية © <span id="year"></span> ASANHANI TK — جميع الحقوق محفوظة.
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile drawer
+    const mobileToggle = document.getElementById('mobileToggle');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    if (mobileToggle && mobileDrawer) {
+      mobileToggle.addEventListener('click', () => mobileDrawer.classList.toggle('hidden'));
+      mobileDrawer.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => mobileDrawer.classList.add('hidden'));
+      });
+    }
+
+    // Animation setup
+    gsap.registerPlugin(ScrollTrigger);
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+    if (!reduceMotion) {
+      gsap.to("#orb1", { x: -40, y: -26, duration: isMobile ? 12 : 8, repeat: -1, yoyo: true, ease: "sine.inOut" });
+      gsap.to("#orb2", { x: 34, y: 28, duration: isMobile ? 14 : 10, repeat: -1, yoyo: true, ease: "sine.inOut" });
+      gsap.to("#orb3", { x: -20, y: 40, duration: isMobile ? 15 : 12, repeat: -1, yoyo: true, ease: "sine.inOut" });
+    }
+
+    const homeProducts = [
+      {name:'غسالة', options:{'7 كيلو':300,'10 كيلو':400,'12 كيلو':500}, img:'https://via.placeholder.com/280x460/06182a/ffffff?text=غسالة'},
+      {name:'غسالة أوتوماتيك', options:{'7 كيلو':320,'10 كيلو':430,'12 كيلو':540}, img:'https://via.placeholder.com/280x460/06182a/ffffff?text=غسالة+اوتوماتيك'},
+      {name:'ثلاجة', options:{'250 لتر':350,'350 لتر':450,'500 لتر':600}, img:'https://via.placeholder.com/280x460/06182a/ffffff?text=ثلاجة'},
+      {name:'مايكروويف', price:120, img:'https://via.placeholder.com/280x460/06182a/ffffff?text=مايكروويف'},
+      {name:'مكواة', price:60, img:'https://via.placeholder.com/280x460/06182a/ffffff?text=مكواة'},
+      {name:'مكنسة كهربائية', price:150, img:'https://via.placeholder.com/280x460/06182a/ffffff?text=مكنسة'},
+      {name:'مروحة', price:50, img:'https://via.placeholder.com/280x460/06182a/ffffff?text=مروحة'},
+      {name:'سخان مياه', price:100, img:'https://via.placeholder.com/280x460/06182a/ffffff?text=سخان'},
+      {name:'خلاط', price:80, img:'https://via.placeholder.com/280x460/06182a/ffffff?text=خلاط'}
+    ];
+
+    const container = document.querySelector('#products-section');
+
+    homeProducts.forEach((p, idx) => {
+      const card = document.createElement('article');
+      card.className = 'tilt-card';
+      const defaultPrice = p.price || (p.options ? Object.values(p.options)[0] : 0);
+
+      let optionsHTML = '';
+      if (p.options) {
+        optionsHTML = `
+          <div class="mt-4">
+            <label class="text-xs text-gray-300 mb-2 block">اختر السعة / الحجم</label>
+            <select class="custom-select" id="option-${idx}">
+        `;
+        for (let key in p.options) {
+          optionsHTML += `<option value="${key}">${key}</option>`;
+        }
+        optionsHTML += `</select></div>`;
+      }
+
+      card.innerHTML = `
+        <div class="tilt-inner glass-card rounded-[2rem] p-4 sm:p-5">
+          <div class="relative overflow-hidden rounded-[1.6rem] border border-white/10 bg-gradient-to-b from-[#07192a] to-[#041428]">
+            <div class="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_20%_20%,rgba(212,175,55,.14),transparent_30%),radial-gradient(circle_at_80%_20%,rgba(138,43,226,.18),transparent_30%)]"></div>
+
+            <div class="relative px-5 py-6 flex justify-center items-center">
+              <div class="w-56 h-96 rounded-[2rem] shadow-2xl flex items-center justify-center bg-gradient-to-b from-[#0f172a] to-[#061026] overflow-hidden border border-white/10">
+                <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover rounded-[2rem]"/>
+              </div>
+            </div>
+
+            <div class="relative p-4 sm:p-5 border-t border-white/10 bg-white/[0.03]">
+              <div class="flex justify-between items-start gap-3">
+                <div>
+                  <div class="text-lg sm:text-xl font-extrabold flex items-center gap-2">
+                    ${p.name}
+                    <i class="fa-solid fa-circle-info text-sm text-gray-400"></i>
+                  </div>
+                  <div class="text-sm text-gray-300 mt-1">جودة منزلية • تصميم أنيق • خيارات متعددة</div>
+                </div>
+                <div class="price-tag" id="price-display-${idx}">${defaultPrice}$</div>
+              </div>
+
+              ${optionsHTML}
+
+              <div class="grid grid-cols-2 gap-3 mt-4">
+                <button class="shine neon-btn bg-gradient-to-r from-green-400 to-blue-500 text-black font-extrabold rounded-2xl py-3" onclick="selectProductFromCard(${idx})">
+                  تقسيط
+                </button>
+                <button class="shine neon-btn bg-gradient-to-r from-purple-400 to-pink-500 text-black font-extrabold rounded-2xl py-3" onclick="buyCash(${idx})">
+                  كاش
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      container.appendChild(card);
+
+      if (p.options) {
+        document.getElementById(`option-${idx}`).addEventListener('change', (e) => {
+          const key = e.target.value;
+          document.getElementById(`price-display-${idx}`).textContent = p.options[key] + '$';
+        });
+      }
+
+      const inner = card.querySelector('.tilt-inner');
+      if (!isMobile && !reduceMotion) {
+        card.addEventListener('mousemove', e => {
+          const rect = card.getBoundingClientRect();
+          const px = (e.clientX - rect.left) / rect.width;
+          const py = (e.clientY - rect.top) / rect.height;
+          const rx = (py - 0.5) * 12;
+          const ry = (px - 0.5) * -18;
+          gsap.to(inner, {
+            rotationX: rx,
+            rotationY: ry,
+            scale: 1.03,
+            duration: 0.4,
+            ease: "power3.out"
+          });
+        });
+
+        card.addEventListener('mouseleave', () => {
+          gsap.to(inner, {
+            rotationX: 0,
+            rotationY: 0,
+            scale: 1,
+            duration: 0.6,
+            ease: "elastic.out(1,.6)"
+          });
+        });
+      }
     });
-  }
 
-  const inner = card.querySelector('.tilt-inner');
-  card.addEventListener('mousemove', e=>{
-    const rect = card.getBoundingClientRect();
-    const px = (e.clientX-rect.left)/rect.width;
-    const py = (e.clientY-rect.top)/rect.height;
-    const rx = (py-0.5)*12;
-    const ry = (px-0.5)*-18;
-    gsap.to(inner,{rotationX:rx,rotationY:ry,scale:1.04,duration:0.4,ease:"power3.out"});
-  });
-  card.addEventListener('mouseleave', ()=>gsap.to(inner,{rotationX:0,rotationY:0,scale:1,duration:0.6,ease:"elastic.out(1,.6)"}));
-});
+    // دوال التحديد والآلة الحاسبة
+    function selectProductFromCard(idx){
+      let name = homeProducts[idx].name;
+      let price = homeProducts[idx].price || (homeProducts[idx].options ? Object.values(homeProducts[idx].options)[0] : 0);
 
-// دوال التحديد والآلة الحاسبة
-function selectProductFromCard(idx){
-  let name = homeProducts[idx].name;
-  let price = homeProducts[idx].price || (homeProducts[idx].options ? Object.values(homeProducts[idx].options)[0] : 0);
-  if(homeProducts[idx].options){
-    const sel = document.getElementById(`option-${idx}`);
-    const key = sel.value;
-    price = homeProducts[idx].options[key];
-    name += ' ' + key;
-  }
-  selectProduct(name, price);
-  document.getElementById('calcCard').scrollIntoView({behavior:'smooth'});
-}
+      if (homeProducts[idx].options) {
+        const sel = document.getElementById(`option-${idx}`);
+        const key = sel.value;
+        price = homeProducts[idx].options[key];
+        name += ' ' + key;
+      }
 
-// دالة زر كاش
-function buyCash(idx){
-  let name = homeProducts[idx].name;
-  let price = homeProducts[idx].price || (homeProducts[idx].options ? Object.values(homeProducts[idx].options)[0] : 0);
-  if(homeProducts[idx].options){
-    const sel = document.getElementById(`option-${idx}`);
-    const key = sel.value;
-    price = homeProducts[idx].options[key];
-    name += ' ' + key;
-  }
-  const msg = `مرحباً، أود شراء ${name} بسعر ${price}$`;
-  window.open(`https://wa.me/967773333413?text=${encodeURIComponent(msg)}`, '_blank');
-}
+      selectProduct(name, price);
+      document.getElementById('calcCard').scrollIntoView({behavior:'smooth'});
+    }
 
-const increaseMap={1:7,2:12,3:16,4:20,5:23,6:25,7:28,8:31,9:34,10:36,11:39,12:41};
-const rates={USD:1,SAR:3.8,YER:540};
+    // دالة زر كاش
+    function buyCash(idx){
+      let name = homeProducts[idx].name;
+      let price = homeProducts[idx].price || (homeProducts[idx].options ? Object.values(homeProducts[idx].options)[0] : 0);
 
-function selectProduct(name,price){
-  document.getElementById('selectedProduct').textContent=name+' — '+price+'$';
-  document.getElementById('price').value=price;
-}
+      if (homeProducts[idx].options) {
+        const sel = document.getElementById(`option-${idx}`);
+        const key = sel.value;
+        price = homeProducts[idx].options[key];
+        name += ' ' + key;
+      }
 
-function calculate(){
-  let P=parseFloat(document.getElementById('price').value)||0;
-  let D=parseFloat(document.getElementById('down').value)||0;
-  let months=parseInt(document.getElementById('months').value)||1;
-  if(months<1) months=1;
-  if(months>12) months=12;
-  let remaining=P-D;
-  if(remaining<0) remaining=0;
-  let perc=increaseMap[months]||0;
-  let increaseUSD=remaining*perc/100;
-  let totalUSD=remaining+increaseUSD;
-  let monthlyUSD=totalUSD/months;
+      const msg = `مرحباً، أود شراء ${name} بسعر ${price}$`;
+      window.open(`https://wa.me/967773333413?text=${encodeURIComponent(msg)}`, '_blank');
+    }
 
-  let currency=document.getElementById('currency').value;
-  let rate=rates[currency];
-  let displayTotal=(totalUSD*rate).toFixed(2);
-  let displayMonthly=(monthlyUSD*rate).toFixed(2);
-  let displayIncrease=(increaseUSD*rate).toFixed(2);
+    const increaseMap = {1:7,2:12,3:16,4:20,5:23,6:25,7:28,8:31,9:34,10:36,11:39,12:41};
+    const rates = {USD:1,SAR:3.8,YER:540};
 
-  document.getElementById('result').innerHTML=
-    `القسط الشهري: ${displayMonthly} ${currency}<br>إجمالي بعد ${months} شهر: ${displayTotal} ${currency}<br>الزيادة على المبلغ المتبقي: ${displayIncrease} ${currency}`;
-}
+    function selectProduct(name, price){
+      document.getElementById('selectedProduct').textContent = name + ' — ' + price + '$';
+      document.getElementById('price').value = price;
+    }
 
-function resetCalc(){
-  document.getElementById('price').value=0;
-  document.getElementById('down').value=0;
-  document.getElementById('months').value=1;
-  document.getElementById('currency').value='USD';
-  document.getElementById('selectedProduct').textContent='لم يتم الاختيار';
-  document.getElementById('result').textContent='';
-}
-</script>
+    function calculate(){
+      let P = parseFloat(document.getElementById('price').value) || 0;
+      let D = parseFloat(document.getElementById('down').value) || 0;
+      let months = parseInt(document.getElementById('months').value) || 1;
+
+      if (months < 1) months = 1;
+      if (months > 12) months = 12;
+
+      let remaining = P - D;
+      if (remaining < 0) remaining = 0;
+
+      let perc = increaseMap[months] || 0;
+      let increaseUSD = remaining * perc / 100;
+      let totalUSD = remaining + increaseUSD;
+      let monthlyUSD = totalUSD / months;
+
+      let currency = document.getElementById('currency').value;
+      let rate = rates[currency];
+      let displayTotal = (totalUSD * rate).toFixed(2);
+      let displayMonthly = (monthlyUSD * rate).toFixed(2);
+      let displayIncrease = (increaseUSD * rate).toFixed(2);
+
+      document.getElementById('result').innerHTML =
+        `القسط الشهري: ${displayMonthly} ${currency}<br>
+         إجمالي بعد ${months} شهر: ${displayTotal} ${currency}<br>
+         الزيادة على المبلغ المتبقي: ${displayIncrease} ${currency}`;
+    }
+
+    function resetCalc(){
+      document.getElementById('price').value = 0;
+      document.getElementById('down').value = 0;
+      document.getElementById('months').value = 1;
+      document.getElementById('currency').value = 'USD';
+      document.getElementById('selectedProduct').textContent = 'لم يتم الاختيار';
+      document.getElementById('result').textContent = 'لم يتم إجراء الحساب بعد';
+    }
+  </script>
 
 </body>
 </html>
